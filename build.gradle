@@ -37,22 +37,31 @@ subprojects {
 
 
 project(':frontend') {
+    dependencies {
+        compile project(':frontend:frontend-ui')
+        //compile project(':frontend:frontend-api')
+    }
+}
+
+
+project(':frontend:frontend-ui') {
     apply plugin: 'war'
+    apply plugin: 'org.akhikhl.gretty'
+    
     
     dependencies {
-        compile project(':frontend:frontend-api')
+        // http://mvnrepository.com/artifact/javax.faces/jsf-api
+        compile group: 'org.glassfish', name: 'javax.faces', version: '2.1.13'
+    }
+    
+    gretty {
+        servletContainer    = 'jetty9'
     }
 }
 
 
 project(':frontend:frontend-api') {
-    apply plugin: 'org.akhikhl.gretty'
-    
     dependencies {
         compile 'com.sun.jersey:jersey-bundle:1.19.1'
-    }
-    
-    gretty {
-        servletContainer    = 'jetty9'
     }
 }
