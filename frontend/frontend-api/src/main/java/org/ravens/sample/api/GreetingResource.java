@@ -21,7 +21,7 @@
  *  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  *  THE SOFTWARE.
  */
-package org.ravens.sample.api.resources;
+package org.ravens.sample.api;
 
 
 import javax.ws.rs.GET;
