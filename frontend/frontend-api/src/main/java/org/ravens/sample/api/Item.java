@@ -33,36 +33,16 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType
 public class Item {
     
-    private String id;
-    
     private String name;
     
     
     public Item() {
-        this.id = "0";
-        this.name = "unknown";
+        this.name = "";
     }
     
     
-    public Item(final String id, final String name) {
-        this.id = id;
+    public Item(final String name) {
         this.name = name;
-    }
-    
-    
-    /**
-     * @return the id
-     */
-    public String getId() {
-        return id;
-    }
-    
-    
-    /**
-     * @param id the id to set
-     */
-    public void setId(String id) {
-        this.id = id;
     }
     
     

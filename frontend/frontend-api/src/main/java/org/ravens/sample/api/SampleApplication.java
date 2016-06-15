@@ -24,6 +24,9 @@
 package org.ravens.sample.api;
 
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
@@ -33,5 +36,28 @@ import javax.ws.rs.core.Application;
  */
 @ApplicationPath("/sample")
 public class SampleApplication extends Application {
-    // nothing to do
+    
+    /**
+     * @see javax.ws.rs.core.Application#getClasses()
+     */
+    @Override
+    public Set<Class<?>> getClasses() {
+        final Set<Class<?>> classes = new HashSet<>();
+        classes.add(GreetingResource.class);
+        
+        return classes;
+    }
+    
+    
+    /**
+     * @see javax.ws.rs.core.Application#getSingletons()
+     */
+    @Override
+    public Set<Object> getSingletons() {
+        final Set<Object> set = new HashSet<>();
+        set.add(new CartResource());
+        
+        return set;
+    }
+    
 }
