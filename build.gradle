@@ -22,8 +22,14 @@ subprojects {
 
 
 project(':frontend') {
-    apply plugin: 'war'
-    apply plugin: 'org.akhikhl.gretty'
+    allprojects {
+        apply plugin: 'war'
+        apply plugin: 'org.akhikhl.gretty'
+        
+        gretty {
+            servletContainer = 'jetty9'
+        }
+    }
     
     subprojects {
         // Apply the java plugin to add support for Java
@@ -38,26 +44,18 @@ project(':frontend') {
     war {
         webAppDirName = 'frontend-ui/src/main/webapp'
     }
-    
-    gretty {
-        servletContainer    = 'jetty9'
-    }
 }
 
 
 project(':frontend:frontend-ui') {
-    apply plugin: 'war'
-    
     dependencies {
-        compile group: 'com.sun.faces', name: 'jsf-api',    version: '2.2.13'
-        compile group: 'com.sun.faces', name: 'jsf-impl',   version: '2.2.13'
+        compile group: 'com.sun.faces', name: 'jsf-api',  version: '2.2.13'
+        compile group: 'com.sun.faces', name: 'jsf-impl', version: '2.2.13'
     }
 }
 
 
 project(':frontend:frontend-api') {
-    apply plugin: 'war'
-    
     dependencies {
         compile 'com.sun.jersey:jersey-bundle:1.19.1'
     }
