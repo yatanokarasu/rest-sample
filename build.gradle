@@ -56,7 +56,15 @@ project(':frontend:frontend-ui') {
 
 
 project(':frontend:frontend-api') {
+    configurations {
+        testCompile.exclude group: 'javax.ws.rs', module: 'jsr311-api'
+    }
+    
     dependencies {
         compile 'com.sun.jersey:jersey-bundle:1.19.1'
+        
+        // for Unit testing
+        //providedCompile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
+        //testCompile 'org.glassfish.jersey.test-framework.providers:jersey-test-framework-provider-grizzly2:2.23.1'
     }
 }

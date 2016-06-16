@@ -27,18 +27,16 @@ package org.ravens.sample.api;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
+import javax.servlet.AsyncEvent;
+import javax.servlet.AsyncListener;
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.WebApplicationException;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 
@@ -48,10 +46,7 @@ import javax.ws.rs.core.MediaType;
 @Path("/cart")
 public class CartResource {
     
-    @Context
-    private HttpServletRequest request;
-    
-    private List<Item>         items = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
     
     
     /**
@@ -64,6 +59,9 @@ public class CartResource {
     }
     
     
+    /**
+     * @param requestBody
+     */
     @PUT
     public void addItem(final InputStream requestBody) {
         try {
@@ -73,6 +71,23 @@ public class CartResource {
             throw new WebApplicationException(exception);
         }
     }
+    
+    
+    /**
+     * @param request 
+     */
+    //@POST
+    //public void login(final InputStream stream, @Context final HttpServletRequest request) {
+    //    request.setAttribute("key", "value");
+    //    final AsyncContext asyncContext = request.startAsync();
+    //    asyncContext.addListener(new AsyncListenerImpl());
+    //    asyncContext.start(new Runnable() {
+    //        
+    //        public void run() {
+    //            System.out.println("async run");
+    //        }
+    //    });
+    //}
     
     
     private byte[] readFromStream(InputStream stream) throws IOException {
@@ -86,6 +101,41 @@ public class CartResource {
             }
         } while (wasRead > -1);
         return baos.toByteArray();
+    }
+    
+    
+    private static final class AsyncListenerImpl implements AsyncListener {
+
+        /**
+         * @see javax.servlet.AsyncListener#onComplete(javax.servlet.AsyncEvent)
+         */
+        public void onComplete(AsyncEvent event) throws IOException {
+            event.getAsyncContext().complete();
+        }
+
+        /**
+         * @see javax.servlet.AsyncListener#onTimeout(javax.servlet.AsyncEvent)
+         */
+        public void onTimeout(AsyncEvent event) throws IOException {
+            // TODO Auto-generated method stub
+            
+        }
+
+        /**
+         * @see javax.servlet.AsyncListener#onError(javax.servlet.AsyncEvent)
+         */
+        public void onError(AsyncEvent event) throws IOException {
+            // TODO Auto-generated method stub
+            
+        }
+
+        /**
+         * @see javax.servlet.AsyncListener#onStartAsync(javax.servlet.AsyncEvent)
+         */
+        public void onStartAsync(AsyncEvent event) throws IOException {
+            String value = (String) event.getAsyncContext().getRequest().getAttribute("key");
+        }
+        
     }
     
 }
